@@ -1,0 +1,13 @@
+https://en.wikipedia.org/wiki/Mortgage_calculator
+
+Possible Data Points
+Balance
+Interest Rate
+Number of monthly payments (Term of the Loan)
+Principal (amount borrowed)
+Number of payments per year
+Regular Payment Amount
+Total Number of Payments
+
+
+Total Interest Paid Variables
