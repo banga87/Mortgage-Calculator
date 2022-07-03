@@ -9,18 +9,20 @@ class Person:
             self.name = name
 
         if not monthly_salary:
-            self.monthly_salary = input("What is your monthly salary?: ")
+            self.monthly_salary = int(input("What is your monthly salary?: "))
         else:
             self.monthly_salary = monthly_salary
 
         if not monthly_expenses:    
-            self.monthly_expenses = input("What are your monthly expenses?: ")
+            self.monthly_expenses = int(input("What are your monthly expenses?: "))
 
-        self.mortgage = None
-        self.monthly_budget = None
+        self.mortgage = 0
+        self.monthly_budget = 0
 
-    def monthly_budget(self):
-        self.monthly_budget = self.monthly_salary - self.monthly_expenses
+    def budget_calc(self):
+        budget = self.monthly_salary - self.monthly_expenses
+        self.monthly_budget = budget
+        return self.monthly_budget
 
 class Mortgage:
     
@@ -28,45 +30,62 @@ class Mortgage:
         self.rate = rate
 
         if not principal:
-            self.principal = input("How much are you looking to borrow?: ")
+            self.principal = int(input("How much are you looking to borrow?: "))
         else:
             self.principal = principal
 
         if not term:
-            self.term = input("How many years would you like to lock the loan in for?: ")
+            self.term = int(input("How many years would you like to lock the loan in for?: "))
         else:
             self.term = term
 
     def monthly_rate(self):
-        monthly_rate = self.rate / 12
-        return monthly_rate
+        m_rate = float(self.rate / 12)
+        return m_rate
 
     def num_monthly_payments(self):
-        num_monthly_payments = self.term * 12
+        num_monthly_payments = int(self.term * 12)
         return num_monthly_payments
 
-    def monthly_payments(self):
-        numerator = self.principal(1 + self.monthly_rate)**self.num_monthly_payments
-        denominator = ((1 + self.monthly_rate)**self.num_monthly_payments) - 1
-        monthly_payments = numerator / denominator
-        return monthly_payments
+    def monthly_payments(self, m_rate, n_payments):
+        numerator = m_rate*self.principal*(1 + m_rate)**n_payments
+        denominator = ((1 + m_rate)**n_payments) - 1
+        payments = numerator / denominator
+        return payments
 
 
 
 
 print(" ::: Welcome to Mortgage Calculator v1 ::: ")
 print("Please provide the information prompted below")
+
 p = Person()
+m_budget = p.budget_calc()
+print("Prospect Name: {}".format(p.name))
+print("Prospect Salary: ${}".format(p.monthly_salary))
+print("Prospect Expenses: ${}".format(p.monthly_expenses))
+print('\n')
+
 m = Mortgage()
-monthly_rate = m.monthly_rate()
-num_monthly_payments = m.num_monthly_payments()
-monthly_payments = m.monthly_payments()
-monthly_budget = p.monthly_budget()
-print("Your monthly repayments would be ${}.".format(monthly_payments))
+print('\n')
+print("Requested Principal: ${}".format(m.principal))
+print("Requested Term: {}".format(m.term))
+
+m_rate = m.monthly_rate()
+print("Monthly Rate: {}".format(m_rate))
+
+num_payments = m.num_monthly_payments()
+print("Number of Payments: {}".format(num_payments))
+
+m_payments = m.monthly_payments(m_rate, num_payments)
+print("Monthly Payment Amount: {}".format(m_payments))
+print('\n')
+
+print("Your monthly repayments would be ${}.".format(m_payments))
 print("We're just running some numbers... hang tight...")
 time.sleep(3)
 
-if monthly_payments >= p.monthly_budget:
+if m_payments >= m_budget:
     print("You're out of your fucking mind mate.")
     print("There is no way we are approving you for this loan!")
 else:
