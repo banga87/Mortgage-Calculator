@@ -39,8 +39,12 @@ class Mortgage:
         else:
             self.term = term
 
+        self.interest = 0
+        self.m_rate = 0
+
     def monthly_rate(self):
         m_rate = float(self.rate / 12)
+        self.m_rate = m_rate
         return m_rate
 
     def num_monthly_payments(self):
@@ -52,9 +56,6 @@ class Mortgage:
         denominator = ((1 + m_rate)**n_payments) - 1
         payments = numerator / denominator
         return payments
-
-
-
 
 print(" ::: Welcome to Mortgage Calculator v1 ::: ")
 print("Please provide the information prompted below")
@@ -88,7 +89,6 @@ time.sleep(3)
 if m_payments >= m_budget:
     print("You're out of your fucking mind mate.")
     print("There is no way we are approving you for this loan!")
+
 else:
     print("Loan application has been approved.")
-
-
